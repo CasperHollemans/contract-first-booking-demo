@@ -83,6 +83,19 @@ func TestSlot_Grid(t *testing.T) {
 	})
 }
 
+// Rule: at least 30 minutes, in 15-minute increments.
+func TestSlot_Length(t *testing.T) {
+	midnight := at(monday, "00:00")
+	runSelectCases(t, []selectCase{
+		{"15 minutes is not selectable", midnight, slot(monday, "10:00", "10:15"), false},
+		{"29 minutes is not selectable", midnight, slot(monday, "10:00", "10:29"), false},
+		{"30 minutes is selectable", midnight, slot(monday, "10:00", "10:30"), true},
+		{"45 minutes is selectable", midnight, slot(monday, "10:00", "10:45"), true},
+		{"zero length is not selectable", midnight, slot(monday, "10:00", "10:00"), false},
+		{"end before start is not selectable", midnight, slot(monday, "11:00", "10:00"), false},
+	})
+}
+
 func TestSlot_ValidSlotLaterTodayIsSelectable(t *testing.T) {
 	now := at(monday, "00:00")
 	if !slot(monday, "10:00", "11:00").SelectableAt(now) {

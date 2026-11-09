@@ -11,6 +11,9 @@ const (
 	ClosesAt = 19 * time.Hour
 	// Grid is the step that start and end times fall on.
 	Grid = 15 * time.Minute
+	// MinLength is the shortest slot. Longer slots grow in Grid steps,
+	// which onGrid already guarantees.
+	MinLength = 30 * time.Minute
 )
 
 // Slot is a time slot on one day, in the cafe's time zone.
@@ -21,7 +24,11 @@ type Slot struct {
 
 // SelectableAt reports whether the slot can be selected at the given moment.
 func (s Slot) SelectableAt(now time.Time) bool {
-	return s.withinBookingWindow(now) && s.withinOpeningHours() && s.onGrid()
+	return s.withinBookingWindow(now) && s.withinOpeningHours() && s.onGrid() && s.longEnough()
+}
+
+func (s Slot) longEnough() bool {
+	return s.End.Sub(s.Start) >= MinLength
 }
 
 // onGrid: start and end are whole quarters of an hour.
