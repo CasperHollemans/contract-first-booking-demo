@@ -9,6 +9,8 @@ const (
 	// Opening hours, as offsets from the start of the day. Same every day.
 	OpensAt  = 8 * time.Hour
 	ClosesAt = 19 * time.Hour
+	// Grid is the step that start and end times fall on.
+	Grid = 15 * time.Minute
 )
 
 // Slot is a time slot on one day, in the cafe's time zone.
@@ -19,7 +21,16 @@ type Slot struct {
 
 // SelectableAt reports whether the slot can be selected at the given moment.
 func (s Slot) SelectableAt(now time.Time) bool {
-	return s.withinBookingWindow(now) && s.withinOpeningHours()
+	return s.withinBookingWindow(now) && s.withinOpeningHours() && s.onGrid()
+}
+
+// onGrid: start and end are whole quarters of an hour.
+func (s Slot) onGrid() bool {
+	return isOnGrid(s.Start) && isOnGrid(s.End)
+}
+
+func isOnGrid(t time.Time) bool {
+	return t.Sub(startOfDay(t))%Grid == 0
 }
 
 // withinOpeningHours: starts at or after opening, ends at or before closing.

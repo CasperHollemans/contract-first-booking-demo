@@ -67,6 +67,22 @@ func TestSlot_OpeningHours(t *testing.T) {
 	})
 }
 
+// Rule: start and end fall on the 15-minute grid (:00, :15, :30, :45).
+func TestSlot_Grid(t *testing.T) {
+	midnight := at(monday, "00:00")
+	runSelectCases(t, []selectCase{
+		{"every quarter is selectable as a start", midnight, slot(monday, "10:15", "11:00"), true},
+		{"start at :30 is selectable", midnight, slot(monday, "10:30", "11:00"), true},
+		{"start at :45 is selectable", midnight, slot(monday, "10:45", "11:15"), true},
+		{"start off the grid is not selectable", midnight, slot(monday, "10:07", "10:45"), false},
+		{"end off the grid is not selectable", midnight, slot(monday, "10:15", "10:50"), false},
+		{"start one minute past a quarter is not selectable", midnight, slot(monday, "10:01", "11:00"), false},
+		{"end one minute before a quarter is not selectable", midnight, slot(monday, "10:00", "10:59"), false},
+		{"seconds off the grid are not selectable", midnight,
+			Slot{Start: at(monday, "10:00").Add(30 * time.Second), End: at(monday, "11:00")}, false},
+	})
+}
+
 func TestSlot_ValidSlotLaterTodayIsSelectable(t *testing.T) {
 	now := at(monday, "00:00")
 	if !slot(monday, "10:00", "11:00").SelectableAt(now) {
