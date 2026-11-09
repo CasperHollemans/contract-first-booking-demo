@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Book a room</title>
+  <script src="/static/htmx.min.js"></script>
+</head>
+<body>
+  <main>
+    <h1>Book a room</h1>
+    <!-- novalidate: the booking rules live in the domain, not in the browser. -->
+    <form hx-get="/ui/slots/check" hx-target="#result" novalidate>
+      <label>Date <input type="date" name="date" data-testid="date"></label>
+      <label>From <input type="time" name="start" data-testid="start"></label>
+      <label>To <input type="time" name="end" data-testid="end"></label>
+      <button type="submit" data-testid="check">Check</button>
+    </form>
+    <div id="result" aria-live="polite"></div>
+  </main>
+</body>
+</html>

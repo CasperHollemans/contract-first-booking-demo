@@ -3,14 +3,26 @@
 package controller
 
 import (
+	"embed"
 	"encoding/json"
 	"errors"
+	"html/template"
+	"io/fs"
 	"net/http"
 	"net/url"
 	"time"
 
 	"github.com/casperhollemans/contract-first-booking-demo/internal/domain"
 	"github.com/casperhollemans/contract-first-booking-demo/internal/service"
+)
+
+var (
+	//go:embed templates/*.html
+	templateFiles embed.FS
+	//go:embed static
+	staticFiles embed.FS
+
+	templates = template.Must(template.ParseFS(templateFiles, "templates/*.html"))
 )
 
 type SlotController struct {
@@ -24,6 +36,28 @@ func NewSlotController(slots *service.SlotService, cafeTime *time.Location) *Slo
 
 func (c *SlotController) Register(mux *http.ServeMux) {
 	mux.HandleFunc("GET /slots/check", c.checkJSON)
+
+	mux.HandleFunc("GET /{$}", c.page)
+	mux.HandleFunc("GET /ui/slots/check", c.checkFragment)
+	static, _ := fs.Sub(staticFiles, "static")
+	mux.Handle("GET /static/", http.StripPrefix("/static/", http.FileServerFS(static)))
+}
+
+// page: GET / → the slot form.
+func (c *SlotController) page(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	templates.ExecuteTemplate(w, "index.html", nil)
+}
+
+// checkFragment: GET /ui/slots/check (htmx) → the slot-result fragment.
+func (c *SlotController) checkFragment(w http.ResponseWriter, r *http.Request) {
+	slot, err := parseSlot(r.URL.Query(), c.loc)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	templates.ExecuteTemplate(w, "slot_result.html", struct{ Selectable bool }{c.slots.IsSelectable(slot)})
 }
 
 // checkJSON: GET /slots/check?date=2026-12-09&start=10:00&end=11:00
