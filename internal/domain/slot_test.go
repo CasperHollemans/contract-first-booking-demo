@@ -20,6 +20,38 @@ func slot(day, start, end string) Slot {
 
 const monday = "2026-11-09"
 
+type selectCase struct {
+	name string
+	now  time.Time
+	slot Slot
+	want bool
+}
+
+func runSelectCases(t *testing.T, cases []selectCase) {
+	t.Helper()
+	for _, c := range cases {
+		t.Run(c.name, func(t *testing.T) {
+			if got := c.slot.SelectableAt(c.now); got != c.want {
+				t.Fatalf("SelectableAt(%s) for %s–%s = %v, want %v",
+					c.now.Format("2006-01-02 15:04"), c.slot.Start.Format("2006-01-02 15:04"), c.slot.End.Format("15:04"), got, c.want)
+			}
+		})
+	}
+}
+
+// Rule: a date from today up to and including 30 days ahead.
+func TestSlot_DateRange(t *testing.T) {
+	midnight := at(monday, "00:00")
+	runSelectCases(t, []selectCase{
+		{"yesterday is not selectable", midnight, slot("2026-11-08", "10:00", "11:00"), false},
+		{"today is selectable", midnight, slot(monday, "10:00", "11:00"), true},
+		{"29 days ahead is selectable", midnight, slot("2026-12-08", "10:00", "11:00"), true},
+		{"exactly 30 days ahead is selectable", midnight, slot("2026-12-09", "10:00", "11:00"), true},
+		{"31 days ahead is not selectable", midnight, slot("2026-12-10", "10:00", "11:00"), false},
+		{"30 days counts calendar days, not 24h from now", at(monday, "18:00"), slot("2026-12-09", "18:30", "19:00"), true},
+	})
+}
+
 func TestSlot_ValidSlotLaterTodayIsSelectable(t *testing.T) {
 	now := at(monday, "00:00")
 	if !slot(monday, "10:00", "11:00").SelectableAt(now) {
