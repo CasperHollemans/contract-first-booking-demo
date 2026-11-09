@@ -96,6 +96,17 @@ func TestSlot_Length(t *testing.T) {
 	})
 }
 
+// Rule: on today's date, only before the slot starts.
+func TestSlot_NotStartedYet(t *testing.T) {
+	runSelectCases(t, []selectCase{
+		{"at 10:07, 10:15 is selectable", at(monday, "10:07"), slot(monday, "10:15", "11:00"), true},
+		{"at 10:07, 10:00 has started and is not selectable", at(monday, "10:07"), slot(monday, "10:00", "11:00"), false},
+		{"at exactly 10:15, 10:15 is not selectable", at(monday, "10:15"), slot(monday, "10:15", "11:00"), false},
+		{"one second before 10:15, 10:15 is selectable", at(monday, "10:15").Add(-time.Second), slot(monday, "10:15", "11:00"), true},
+		{"after closing, nothing today is selectable", at(monday, "19:30"), slot(monday, "18:30", "19:00"), false},
+	})
+}
+
 func TestSlot_ValidSlotLaterTodayIsSelectable(t *testing.T) {
 	now := at(monday, "00:00")
 	if !slot(monday, "10:00", "11:00").SelectableAt(now) {
