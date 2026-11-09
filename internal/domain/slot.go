@@ -24,8 +24,11 @@ type Slot struct {
 
 // SelectableAt reports whether the slot can be selected at the given moment.
 func (s Slot) SelectableAt(now time.Time) bool {
-	return s.withinBookingWindow(now) && s.withinOpeningHours() && s.onGrid() && s.longEnough() &&
-		s.notStartedAt(now)
+	return s.withinBookingWindow(now) && // today up to and including 30 days ahead
+		s.withinOpeningHours() && // 08:00–19:00, every day
+		s.onGrid() && // :00, :15, :30, :45
+		s.longEnough() && // at least 30 minutes
+		s.notStartedAt(now) // only before it starts
 }
 
 // notStartedAt: from the start time onwards, the slot can no longer be selected.
