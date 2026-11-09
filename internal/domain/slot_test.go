@@ -52,6 +52,21 @@ func TestSlot_DateRange(t *testing.T) {
 	})
 }
 
+// Rule: within opening hours 08:00–19:00, every day; may end exactly at 19:00.
+func TestSlot_OpeningHours(t *testing.T) {
+	midnight := at(monday, "00:00")
+	runSelectCases(t, []selectCase{
+		{"starting before opening is not selectable", midnight, slot(monday, "07:45", "08:30"), false},
+		{"starting at opening is selectable", midnight, slot(monday, "08:00", "08:30"), true},
+		{"ending at closing is selectable", midnight, slot(monday, "18:30", "19:00"), true},
+		{"ending after closing is not selectable", midnight, slot(monday, "18:45", "19:15"), false},
+		{"starting at closing is not selectable", midnight, slot(monday, "19:00", "19:30"), false},
+		{"the whole day is selectable", midnight, slot(monday, "08:00", "19:00"), true},
+		{"a Saturday is selectable", midnight, slot("2026-11-14", "10:00", "11:00"), true},
+		{"a Sunday is selectable", midnight, slot("2026-11-15", "10:00", "11:00"), true},
+	})
+}
+
 func TestSlot_ValidSlotLaterTodayIsSelectable(t *testing.T) {
 	now := at(monday, "00:00")
 	if !slot(monday, "10:00", "11:00").SelectableAt(now) {
