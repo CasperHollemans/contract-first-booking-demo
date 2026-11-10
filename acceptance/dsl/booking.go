@@ -21,6 +21,7 @@ var cafeTime = time.UTC
 // Booking is one user's session with the system, through one driver.
 type Booking struct {
 	t      *testing.T
+	via    Driver // named in every failure, next to the subtest name
 	driver drivers.Driver
 	today  time.Time
 
@@ -31,15 +32,15 @@ type Booking struct {
 // ForEachDriver runs the example once through the API and once through the UI.
 func ForEachDriver(t *testing.T, example func(b *Booking)) {
 	t.Run("api", func(t *testing.T) {
-		example(newBooking(t, drivers.NewAPIDriver(t)))
+		example(newBooking(t, API, drivers.NewAPIDriver(t)))
 	})
 	t.Run("ui", func(t *testing.T) {
-		example(newBooking(t, drivers.NewUIDriver(t)))
+		example(newBooking(t, UI, drivers.NewUIDriver(t)))
 	})
 }
 
-func newBooking(t *testing.T, d drivers.Driver) *Booking {
-	b := &Booking{t: t, driver: d}
+func newBooking(t *testing.T, via Driver, d drivers.Driver) *Booking {
+	b := &Booking{t: t, via: via, driver: d}
 	b.GivenToday("9 November") // the examples' default: Monday 9 November, 00:00
 	return b
 }
@@ -49,6 +50,17 @@ func (b *Booking) GivenToday(day string) {
 	b.t.Helper()
 	b.today = parseDay(b.t, day)
 	b.driver.SetNow(b.today)
+}
+
+// GivenNow sets "now" to a time on the given day: ("9 November", "10:07").
+func (b *Booking) GivenNow(day, clock string) {
+	b.t.Helper()
+	b.today = parseDay(b.t, day)
+	at, err := time.Parse("15:04", clock)
+	if err != nil {
+		b.t.Fatalf("dsl: cannot read time %q, expected e.g. \"10:07\"", clock)
+	}
+	b.driver.SetNow(b.today.Add(time.Duration(at.Hour())*time.Hour + time.Duration(at.Minute())*time.Minute))
 }
 
 // WhenUserChooses picks a slot on a given day: ("9 December", "10:00–11:00").
@@ -73,7 +85,7 @@ func (b *Booking) ThenSlotCanBeSelected() {
 	b.t.Helper()
 	b.requireAnswer()
 	if !b.selectable {
-		b.t.Fatal("expected the slot to be selectable, but it cannot be selected")
+		b.t.Fatalf("%s: expected the slot to be selectable, but it cannot be selected", b.via)
 	}
 }
 
@@ -81,14 +93,14 @@ func (b *Booking) ThenSlotCannotBeSelected() {
 	b.t.Helper()
 	b.requireAnswer()
 	if b.selectable {
-		b.t.Fatal("expected the slot not to be selectable, but it can be selected")
+		b.t.Fatalf("%s: expected the slot not to be selectable, but it can be selected", b.via)
 	}
 }
 
 func (b *Booking) requireAnswer() {
 	b.t.Helper()
 	if b.checkErr != nil {
-		b.t.Fatalf("the system did not answer: %v", b.checkErr)
+		b.t.Fatalf("%s: the system did not answer: %v", b.via, b.checkErr)
 	}
 }
 
