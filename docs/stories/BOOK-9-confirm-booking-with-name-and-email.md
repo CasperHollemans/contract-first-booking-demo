@@ -10,6 +10,9 @@ Status: approved
 - The booking is made at the moment the user confirms it.
 - After confirming, the user sees a simple thank-you page.
 
+## Examples
+- Selected 10:15–11:00 at 10:10 and confirmed at exactly 10:15: the booking cannot be confirmed. _(Moved from BOOK-1.)_
+
 ## Out of scope (demo MVP)
 - Payment.
 - Anything beyond a simple thank-you page (e.g. confirmation email).
