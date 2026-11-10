@@ -1,6 +1,7 @@
 // Package drivers is the only acceptance-test layer that knows how to reach
-// the system: it starts the real server on a real port (with a fake clock)
-// and talks to it over HTTP (API driver) or through headless Chrome (UI driver).
+// the system, always with a fake clock: through the service layer (Domain
+// driver), or by starting the real server on a real port and talking to it
+// over HTTP (API driver) or through headless Chrome (UI driver).
 package drivers
 
 import "time"

@@ -15,6 +15,8 @@ import (
 type Driver string
 
 const (
+	// Domain: the service layer with the fake clock, no HTTP. Rules and logic.
+	Domain Driver = "Domain"
 	// API: the real server over HTTP. Errors, wiring, anything concurrent.
 	API Driver = "API"
 	// UI: the real server through headless Chrome. The happy path only.
@@ -25,6 +27,8 @@ const (
 func newDriver(t *testing.T, d Driver) drivers.Driver {
 	t.Helper()
 	switch d {
+	case Domain:
+		return drivers.NewDomainDriver()
 	case API:
 		return drivers.NewAPIDriver(t)
 	case UI:
