@@ -23,20 +23,9 @@ type Booking struct {
 	t      *testing.T
 	via    Driver // named in every failure, next to the subtest name
 	driver drivers.Driver
-	today  time.Time
 
 	selectable bool
 	checkErr   error
-}
-
-// ForEachDriver runs the example once through the API and once through the UI.
-func ForEachDriver(t *testing.T, example func(b *Booking)) {
-	t.Run("api", func(t *testing.T) {
-		example(newBooking(t, API, drivers.NewAPIDriver(t)))
-	})
-	t.Run("ui", func(t *testing.T) {
-		example(newBooking(t, UI, drivers.NewUIDriver(t)))
-	})
 }
 
 func newBooking(t *testing.T, via Driver, d drivers.Driver) *Booking {
@@ -48,37 +37,27 @@ func newBooking(t *testing.T, via Driver, d drivers.Driver) *Booking {
 // GivenToday sets "now" to 00:00 on the given day, e.g. "9 November".
 func (b *Booking) GivenToday(day string) {
 	b.t.Helper()
-	b.today = parseDay(b.t, day)
-	b.driver.SetNow(b.today)
+	b.driver.SetNow(parseDay(b.t, day))
 }
 
 // GivenNow sets "now" to a time on the given day: ("9 November", "10:07").
 func (b *Booking) GivenNow(day, clock string) {
 	b.t.Helper()
-	b.today = parseDay(b.t, day)
 	at, err := time.Parse("15:04", clock)
 	if err != nil {
 		b.t.Fatalf("dsl: cannot read time %q, expected e.g. \"10:07\"", clock)
 	}
-	b.driver.SetNow(b.today.Add(time.Duration(at.Hour())*time.Hour + time.Duration(at.Minute())*time.Minute))
+	sinceMidnight := time.Duration(at.Hour())*time.Hour + time.Duration(at.Minute())*time.Minute
+	b.driver.SetNow(parseDay(b.t, day).Add(sinceMidnight))
 }
 
 // WhenUserChooses picks a slot on a given day: ("9 December", "10:00–11:00").
+// The slot may use an en dash or a hyphen.
 func (b *Booking) WhenUserChooses(day, slot string) {
 	b.t.Helper()
-	b.choose(parseDay(b.t, day), slot)
-}
-
-// WhenUserChoosesToday picks a slot on today's date: ("08:00–08:30").
-func (b *Booking) WhenUserChoosesToday(slot string) {
-	b.t.Helper()
-	b.choose(b.today, slot)
-}
-
-func (b *Booking) choose(day time.Time, slot string) {
-	b.t.Helper()
+	date := parseDay(b.t, day).Format("2006-01-02")
 	start, end := parseSlot(b.t, slot)
-	b.selectable, b.checkErr = b.driver.CheckSlot(day.Format("2006-01-02"), start, end)
+	b.selectable, b.checkErr = b.driver.CheckSlot(date, start, end)
 }
 
 func (b *Booking) ThenSlotCanBeSelected() {
