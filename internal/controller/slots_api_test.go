@@ -4,11 +4,19 @@ import (
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"testing"
 	"time"
 
 	"github.com/casperhollemans/contract-first-booking-demo/internal/service"
+	"github.com/casperhollemans/contract-first-booking-demo/web"
 )
+
+func TestMain(m *testing.M) {
+	// Templates use paths relative to the project root.
+	os.Chdir("../..")
+	os.Exit(m.Run())
+}
 
 type fixedClock struct{ now time.Time }
 
@@ -17,8 +25,9 @@ func (c fixedClock) Now() time.Time { return c.now }
 // newTestMux serves the slot routes at Monday 9 November 2026, 00:00 UTC.
 func newTestMux() *http.ServeMux {
 	svc := service.NewSlotService(fixedClock{time.Date(2026, 11, 9, 0, 0, 0, 0, time.UTC)})
+	tmpl := web.LoadTemplates()
 	mux := http.NewServeMux()
-	NewSlotController(svc, time.UTC).Register(mux)
+	NewSlotController(svc, time.UTC, tmpl).Register(mux)
 	return mux
 }
 

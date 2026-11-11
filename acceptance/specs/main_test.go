@@ -11,6 +11,8 @@ import (
 )
 
 func TestMain(m *testing.M) {
+	// Templates use paths relative to the project root.
+	os.Chdir("../..")
 	code := m.Run()
 	drivers.CloseBrowser()
 

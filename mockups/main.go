@@ -6,29 +6,14 @@ import (
 	"log"
 	"net/http"
 	"os"
+
+	"github.com/casperhollemans/contract-first-booking-demo/web"
 )
 
 var templates *template.Template
 
 func init() {
-	funcMap := template.FuncMap{
-		"dict": func(values ...interface{}) map[string]interface{} {
-			if len(values)%2 != 0 {
-				panic("dict requires an even number of arguments")
-			}
-			dict := make(map[string]interface{}, len(values)/2)
-			for i := 0; i < len(values); i += 2 {
-				key, ok := values[i].(string)
-				if !ok {
-					panic("dict keys must be strings")
-				}
-				dict[key] = values[i+1]
-			}
-			return dict
-		},
-	}
-
-	templates = template.New("").Funcs(funcMap)
+	templates = template.New("").Funcs(web.FuncMap())
 	templates = template.Must(templates.ParseGlob("web/templates/components/*.html"))
 	templates = template.Must(templates.ParseGlob("mockups/*.html"))
 	templates = template.Must(templates.ParseGlob("mockups/pages/*.html"))
