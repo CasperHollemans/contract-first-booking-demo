@@ -1,0 +1,78 @@
+<!-- mockup navigation: added by the mockup server, not part of the page -->
+<style>
+  body { padding-bottom: 3.5rem; }
+  .mk-nav { position: fixed; left: 0; right: 0; bottom: 0; z-index: 2147483000;
+    display: flex; align-items: center; gap: 0.25rem; flex-wrap: wrap;
+    padding: 0.5rem 0.75rem; background: #111827; color: #f9fafb;
+    font: 14px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    box-shadow: 0 -2px 8px rgb(0 0 0 / 0.15); }
+  .mk-nav a, .mk-nav summary { color: inherit; text-decoration: none; padding: 0.25rem 0.6rem;
+    border-radius: 0.375rem; cursor: pointer; list-style: none; white-space: nowrap; }
+  .mk-nav summary::-webkit-details-marker { display: none; }
+  .mk-nav a:hover, .mk-nav summary:hover { background: #374151; }
+  .mk-nav [aria-current="page"] { background: #f9fafb; color: #111827; }
+  .mk-nav details { position: relative; }
+  .mk-menu { position: absolute; bottom: calc(100% + 0.5rem); left: 0; min-width: 14rem;
+    max-height: 60vh; overflow: auto; padding: 0.375rem; background: #111827;
+    border-radius: 0.5rem; box-shadow: 0 -4px 16px rgb(0 0 0 / 0.25); }
+  .mk-menu a { display: block; }
+  .mk-menu .mk-variant { padding-left: 1.5rem; color: #9ca3af; }
+  .mk-menu .mk-empty { display: block; padding: 0.25rem 0.6rem; color: #9ca3af; }
+  .mk-sep { width: 1px; align-self: stretch; margin: 0 0.5rem; background: #374151; }
+  .mk-label { color: #9ca3af; padding: 0 0.25rem; }
+  .mk-hint { margin-left: auto; color: #6b7280; font-size: 12px; }
+</style>
+<nav class="mk-nav" data-mockup-nav aria-label="Mockups">
+  <a href="/" title="All mockups">⌂</a>
+  <details>
+    <summary>☰ Site</summary>
+    <div class="mk-menu">
+      {{range .Catalog.Site}}{{template "mk-page-links" .}}{{else}}<span class="mk-empty">No site pages yet</span>{{end}}
+    </div>
+  </details>
+  <details>
+    <summary>Prototypes</summary>
+    <div class="mk-menu">
+      {{range .Catalog.Prototypes}}{{template "mk-page-links" .}}{{else}}<span class="mk-empty">No prototypes yet</span>{{end}}
+    </div>
+  </details>
+  <a href="/library"{{if .Library}} aria-current="page"{{end}}>Library</a>
+  {{with .Page}}{{if gt (len .Variants) 1}}
+    <span class="mk-sep"></span>
+    <span class="mk-label">{{.Label}}:</span>
+    {{range .Variants}}<a href="{{.URL}}" data-mk-variant{{if eq .URL $.Current.URL}} aria-current="page"{{end}} title="{{.Title}}">{{.Label}}</a>{{end}}
+    <span class="mk-hint">← → switch</span>
+  {{end}}{{end}}
+</nav>
+<script>
+  (function () {
+    var nav = document.querySelector("[data-mockup-nav]");
+    // Close a menu when another opens or when clicking elsewhere.
+    nav.querySelectorAll("details").forEach(function (d) {
+      d.addEventListener("toggle", function () {
+        if (d.open) nav.querySelectorAll("details").forEach(function (o) { if (o !== d) o.open = false; });
+      });
+    });
+    document.addEventListener("click", function (e) {
+      if (!nav.contains(e.target)) nav.querySelectorAll("details").forEach(function (d) { d.open = false; });
+    });
+    // ← / → flip between variants, unless you're typing.
+    var variants = Array.prototype.slice.call(nav.querySelectorAll("[data-mk-variant]"));
+    if (variants.length < 2) return;
+    document.addEventListener("keydown", function (e) {
+      if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+      if (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
+      var t = e.target;
+      if (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)) return;
+      var i = variants.findIndex(function (a) { return a.getAttribute("aria-current") === "page"; });
+      var next = variants[(i + (e.key === "ArrowRight" ? 1 : variants.length - 1)) % variants.length];
+      window.location.href = next.href;
+    });
+  })();
+</script>
+{{define "mk-page-links"}}
+  {{range $i, $v := .Variants}}
+    {{if eq $i 0}}<a href="{{$v.URL}}" title="{{$v.Title}}">{{$.Label}}</a>
+    {{else}}<a class="mk-variant" href="{{$v.URL}}" title="{{$v.Title}}">{{$v.Label}}</a>{{end}}
+  {{end}}
+{{end}}

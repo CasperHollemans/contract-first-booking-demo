@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "mockups",
+      "runtimeExecutable": "go",
+      "runtimeArgs": ["run", "./mockups"],
+      "port": 3000
+    },
+    {
+      "name": "server",
+      "runtimeExecutable": "go",
+      "runtimeArgs": ["run", "./cmd/server"],
+      "port": 8080
+    }
+  ]
+}

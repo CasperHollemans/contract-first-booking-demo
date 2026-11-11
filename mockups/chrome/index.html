@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mockups</title>
+  <link rel="stylesheet" href="/static/tokens.css">
+  <style>
+    main { max-width: 40rem; margin: 0 auto; padding: var(--space-xl) var(--space-md); }
+    h1 { font-size: var(--font-size-xl); margin: 0 0 var(--space-lg); }
+    h2 { font-size: var(--font-size-sm); text-transform: uppercase; letter-spacing: 0.05em;
+      color: var(--color-text-muted); margin: var(--space-xl) 0 var(--space-sm); }
+    ul { list-style: none; margin: 0; padding: 0; }
+    li.page { padding: var(--space-sm) 0; border-bottom: var(--border-width) solid var(--color-border-light); }
+    .page > a { font-weight: 600; color: var(--color-text); }
+    .variants { display: flex; flex-wrap: wrap; gap: var(--space-xs); margin-top: var(--space-xs); }
+    .variants a { font-size: var(--font-size-sm); padding: 0.125rem var(--space-sm);
+      border: var(--border-width) solid var(--color-border); border-radius: var(--border-radius-md);
+      color: var(--color-primary); text-decoration: none; }
+    .variants a:hover { background: var(--color-primary-lightest); }
+    .empty { color: var(--color-text-muted); }
+    a { color: var(--color-primary); }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Mockups</h1>
+
+  <h2>Site</h2>
+  {{template "index-pages" .Site}}
+
+  <h2>Prototypes</h2>
+  {{template "index-pages" .Prototypes}}
+
+  <h2>Components</h2>
+  <ul><li class="page"><a href="/library">Component library</a></li></ul>
+</main>
+</body>
+</html>
+{{define "index-pages"}}
+  <ul>
+    {{range .}}
+      <li class="page">
+        <a href="{{(index .Variants 0).URL}}">{{.Label}}</a>
+        {{if gt (len .Variants) 1}}
+          <div class="variants">
+            {{range .Variants}}<a href="{{.URL}}" title="{{.Title}}">{{.Label}}</a>{{end}}
+          </div>
+        {{end}}
+      </li>
+    {{else}}
+      <li class="empty">Nothing here yet.</li>
+    {{end}}
+  </ul>
+{{end}}
