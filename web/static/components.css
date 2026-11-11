@@ -78,9 +78,269 @@
   border: var(--border-width) solid var(--color-error);
 }
 
+/* Nav header */
+.nav-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-lg);
+}
+
+.nav-header h2 {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+}
+
+.nav-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  background: none;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  color: var(--color-text);
+  font-size: var(--font-size-lg);
+}
+
+.nav-btn:hover {
+  background-color: var(--color-bg-muted);
+}
+
+/* Calendar (month view) */
+.calendar {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.calendar th {
+  padding: var(--space-sm);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+.calendar td {
+  padding: 2px;
+  text-align: center;
+}
+
+.calendar-day {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  border: none;
+  background: none;
+  font-size: var(--font-size-base);
+  cursor: pointer;
+  color: var(--color-text);
+}
+
+.calendar-day:hover {
+  background-color: var(--color-primary-lightest);
+}
+
+.calendar-day.today {
+  font-weight: 700;
+  border: 2px solid var(--color-primary);
+}
+
+.calendar-day.selected {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.calendar-day.disabled {
+  color: var(--color-border);
+  cursor: not-allowed;
+}
+
+.calendar-day.disabled:hover {
+  background: none;
+}
+
+.calendar-day.other-month {
+  color: var(--color-border-light);
+}
+
+/* Time grid (shared by week view and day timetable) */
+.time-grid {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.time-grid th {
+  padding: var(--space-xs) var(--space-sm);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-text-muted);
+  text-align: center;
+  border-bottom: var(--border-width) solid var(--color-border);
+}
+
+.time-grid th:first-child {
+  width: 3.5rem;
+  text-align: right;
+}
+
+.time-grid td {
+  padding: 0;
+  border: var(--border-width) solid var(--color-border-light);
+  height: 1.5rem;
+  position: relative;
+}
+
+.time-grid td:first-child {
+  border: none;
+  padding-right: var(--space-sm);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  text-align: right;
+  vertical-align: top;
+}
+
+.time-grid .hour-row td {
+  border-top-color: var(--color-border);
+}
+
+.time-grid .time-label {
+  transform: translateY(-0.5em);
+  display: inline-block;
+}
+
+/* Time slot cell */
+.time-cell {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border: none;
+  background: none;
+  cursor: pointer;
+  min-height: 1.5rem;
+}
+
+.time-cell:hover {
+  background-color: var(--color-primary-lightest);
+}
+
+.time-cell.selected {
+  background-color: var(--color-primary-light);
+}
+
+.time-cell.selected-start {
+  background-color: var(--color-primary);
+  border-radius: var(--border-radius-sm) var(--border-radius-sm) 0 0;
+}
+
+.time-cell.selected-end {
+  background-color: var(--color-primary);
+  border-radius: 0 0 var(--border-radius-sm) var(--border-radius-sm);
+}
+
+.time-cell.selected-mid {
+  background-color: var(--color-primary);
+}
+
+.time-cell.unavailable {
+  background-color: var(--color-bg-disabled);
+  cursor: not-allowed;
+}
+
+.time-cell.unavailable:hover {
+  background-color: var(--color-bg-disabled);
+}
+
+/* Week grid header */
+.week-grid th.today-col {
+  background-color: var(--color-primary-lightest);
+}
+
+.week-grid td.today-col {
+  background-color: var(--color-primary-lightest);
+}
+
+/* Step indicator */
+.steps {
+  display: flex;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.step.active {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.step.done {
+  color: var(--color-success);
+}
+
+.step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+}
+
+.step.active .step-number {
+  background-color: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+}
+
+/* Selected slot summary */
+.slot-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md);
+  background-color: var(--color-primary-lightest);
+  border: var(--border-width) solid var(--color-primary-light);
+  border-radius: var(--border-radius-md);
+  margin-top: var(--space-lg);
+}
+
+.slot-summary-text {
+  font-size: var(--font-size-base);
+  font-weight: 500;
+}
+
+.slot-summary-detail {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
 /* Container */
 .container {
   max-width: 48rem;
+  margin: 0 auto;
+  padding: var(--space-xl);
+}
+
+.container-wide {
+  max-width: 64rem;
   margin: 0 auto;
   padding: var(--space-xl);
 }

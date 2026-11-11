@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Book a room - Option B: Two-Step</title>
+  <link rel="stylesheet" href="/static/tokens.css">
+  <link rel="stylesheet" href="/static/components.css">
+  <style>
+    .two-step-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-xl);
+    }
+    @media (min-width: 48rem) {
+      .two-step-layout {
+        grid-template-columns: 320px 1fr;
+      }
+    }
+    .step-panel {
+      min-height: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container-wide">
+    <main class="card">
+      <h1 class="heading-1">Book a room</h1>
+
+      <!-- Step indicator -->
+      <div class="steps">
+        <div class="step done">
+          <span class="step-number">1</span>
+          Pick a date
+        </div>
+        <div class="step active">
+          <span class="step-number">2</span>
+          Choose a time slot
+        </div>
+      </div>
+
+      <div class="two-step-layout">
+        <!-- Step 1: Calendar -->
+        <div class="step-panel">
+          <div class="nav-header">
+            <button class="nav-btn">&larr;</button>
+            <h2>November 2026</h2>
+            <button class="nav-btn">&rarr;</button>
+          </div>
+
+          <table class="calendar">
+            <thead>
+              <tr>
+                <th>Mo</th>
+                <th>Tu</th>
+                <th>We</th>
+                <th>Th</th>
+                <th>Fr</th>
+                <th>Sa</th>
+                <th>Su</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><button class="calendar-day disabled">1</button></td>
+              </tr>
+              <tr>
+                <td><button class="calendar-day disabled">2</button></td>
+                <td><button class="calendar-day disabled">3</button></td>
+                <td><button class="calendar-day disabled">4</button></td>
+                <td><button class="calendar-day disabled">5</button></td>
+                <td><button class="calendar-day disabled">6</button></td>
+                <td><button class="calendar-day disabled">7</button></td>
+                <td><button class="calendar-day disabled">8</button></td>
+              </tr>
+              <tr>
+                <td><button class="calendar-day today">9</button></td>
+                <td><button class="calendar-day selected">10</button></td>
+                <td><button class="calendar-day">11</button></td>
+                <td><button class="calendar-day">12</button></td>
+                <td><button class="calendar-day">13</button></td>
+                <td><button class="calendar-day">14</button></td>
+                <td><button class="calendar-day">15</button></td>
+              </tr>
+              <tr>
+                <td><button class="calendar-day">16</button></td>
+                <td><button class="calendar-day">17</button></td>
+                <td><button class="calendar-day">18</button></td>
+                <td><button class="calendar-day">19</button></td>
+                <td><button class="calendar-day">20</button></td>
+                <td><button class="calendar-day">21</button></td>
+                <td><button class="calendar-day">22</button></td>
+              </tr>
+              <tr>
+                <td><button class="calendar-day">23</button></td>
+                <td><button class="calendar-day">24</button></td>
+                <td><button class="calendar-day">25</button></td>
+                <td><button class="calendar-day">26</button></td>
+                <td><button class="calendar-day">27</button></td>
+                <td><button class="calendar-day">28</button></td>
+                <td><button class="calendar-day">29</button></td>
+              </tr>
+              <tr>
+                <td><button class="calendar-day">30</button></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Step 2: Day timetable -->
+        <div class="step-panel">
+          <div class="nav-header">
+            <h2>Tuesday 10 November</h2>
+          </div>
+
+          <table class="time-grid">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Available</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- 08:00 -->
+              <tr class="hour-row">
+                <td><span class="time-label">08:00</span></td>
+                <td><div class="time-cell"></div></td>
+              </tr>
+              <tr><td></td><td><div class="time-cell"></div></td></tr>
+              <tr><td></td><td><div class="time-cell"></div></td></tr>
+              <tr><td></td><td><div class="time-cell"></div></td></tr>
+              <!-- 09:00 -->
+              <tr class="hour-row">
+                <td><span class="time-label">09:00</span></td>
+                <td><div class="time-cell"></div></td>
+              </tr>
+              <tr><td></td><td><div class="time-cell"></div></td></tr>
+              <tr><td></td><td><div class="time-cell"></div></td></tr>
+              <tr><td></td><td><div class="time-cell"></div></td></tr>
+              <!-- 10:00 – selected slot 10:00-11:00 -->
+              <tr class="hour-row">
+                <td><span class="time-label">10:00</span></td>
+                <td><div class="time-cell selected-start"></div></td>
+              </tr>
+              <tr><td></td><td><div class="time-cell selected-mid"></div></td></tr>
+              <tr><td></td><td><div class="time-cell selected-mid"></div></td></tr>
+              <tr><td></td><td><div class="time-cell selected-end"></div></td></tr>
+              <!-- 11:00 -->
+              <tr class="hour-row">
+                <td><span class="time-label">11:00</span></td>
+                <td><div class="time-cell"></div></td>
+              </tr>
+              <tr><td></td><td><div class="time-cell"></div></td></tr>
+              <tr><td></td><td><div class="time-cell"></div></td></tr>
+              <tr><td></td><td><div class="time-cell"></div></td></tr>
+              <!-- 12:00 -->
+              <tr class="hour-row">
+                <td><span class="time-label">12:00</span></td>
+                <td><div class="time-cell"></div></td>
+              </tr>
+              <tr><td></td><td><div class="time-cell"></div></td></tr>
+              <tr><td></td><td><div class="time-cell"></div></td></tr>
+              <tr><td></td><td><div class="time-cell"></div></td></tr>
+              <!-- 13:00 -->
+              <tr class="hour-row">
+                <td><span class="time-label">13:00</span></td>
+                <td><div class="time-cell"></div></td>
+              </tr>
+              <tr><td></td><td><div class="time-cell"></div></td></tr>
+              <tr><td></td><td><div class="time-cell"></div></td></tr>
+              <tr><td></td><td><div class="time-cell"></div></td></tr>
+              <!-- 14:00 -->
+              <tr class="hour-row">
+                <td><span class="time-label">14:00</span></td>
+                <td><div class="time-cell"></div></td>
+              </tr>
+              <tr><td></td><td><div class="time-cell"></div></td></tr>
+              <tr><td></td><td><div class="time-cell"></div></td></tr>
+              <tr><td></td><td><div class="time-cell"></div></td></tr>
+              <!-- 15:00 -->
+              <tr class="hour-row">
+                <td><span class="time-label">15:00</span></td>
+                <td><div class="time-cell"></div></td>
+              </tr>
+              <tr><td></td><td><div class="time-cell"></div></td></tr>
+              <tr><td></td><td><div class="time-cell"></div></td></tr>
+              <tr><td></td><td><div class="time-cell"></div></td></tr>
+              <!-- 16:00 -->
+              <tr class="hour-row">
+                <td><span class="time-label">16:00</span></td>
+                <td><div class="time-cell"></div></td>
+              </tr>
+              <tr><td></td><td><div class="time-cell"></div></td></tr>
+              <tr><td></td><td><div class="time-cell"></div></td></tr>
+              <tr><td></td><td><div class="time-cell"></div></td></tr>
+              <!-- 17:00 -->
+              <tr class="hour-row">
+                <td><span class="time-label">17:00</span></td>
+                <td><div class="time-cell"></div></td>
+              </tr>
+              <tr><td></td><td><div class="time-cell"></div></td></tr>
+              <tr><td></td><td><div class="time-cell"></div></td></tr>
+              <tr><td></td><td><div class="time-cell"></div></td></tr>
+              <!-- 18:00 -->
+              <tr class="hour-row">
+                <td><span class="time-label">18:00</span></td>
+                <td><div class="time-cell"></div></td>
+              </tr>
+              <tr><td></td><td><div class="time-cell"></div></td></tr>
+              <tr><td></td><td><div class="time-cell"></div></td></tr>
+              <tr><td></td><td><div class="time-cell"></div></td></tr>
+              <!-- 19:00 -->
+              <tr class="hour-row">
+                <td><span class="time-label">19:00</span></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Selection summary -->
+      <div class="slot-summary">
+        <div>
+          <div class="slot-summary-text">Tuesday 10 November, 10:00 &ndash; 11:00</div>
+          <div class="slot-summary-detail">1 hour</div>
+        </div>
+        {{template "button" (dict "Type" "button" "Class" "btn-primary" "Text" "Confirm")}}
+      </div>
+    </main>
+  </div>
+</body>
+</html>

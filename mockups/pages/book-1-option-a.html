@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Book a room - Option A: Week Grid</title>
+  <link rel="stylesheet" href="/static/tokens.css">
+  <link rel="stylesheet" href="/static/components.css">
+</head>
+<body>
+  <div class="container-wide">
+    <main class="card">
+      <h1 class="heading-1">Book a room</h1>
+
+      <!-- Week navigation -->
+      <div class="nav-header">
+        <button class="nav-btn">&larr;</button>
+        <h2>9 &ndash; 15 November 2026</h2>
+        <button class="nav-btn">&rarr;</button>
+      </div>
+
+      <!-- Week time grid -->
+      <table class="time-grid week-grid">
+        <thead>
+          <tr>
+            <th></th>
+            <th class="today-col">Mon 9</th>
+            <th>Tue 10</th>
+            <th>Wed 11</th>
+            <th>Thu 12</th>
+            <th>Fri 13</th>
+            <th>Sat 14</th>
+            <th>Sun 15</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- 08:00 -->
+          <tr class="hour-row">
+            <td><span class="time-label">08:00</span></td>
+            <td class="today-col"><div class="time-cell unavailable"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td class="today-col"><div class="time-cell unavailable"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td class="today-col"><div class="time-cell unavailable"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td class="today-col"><div class="time-cell unavailable"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+          </tr>
+          <!-- 09:00 -->
+          <tr class="hour-row">
+            <td><span class="time-label">09:00</span></td>
+            <td class="today-col"><div class="time-cell unavailable"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td class="today-col"><div class="time-cell unavailable"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td class="today-col"><div class="time-cell unavailable"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td class="today-col"><div class="time-cell unavailable"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+          </tr>
+          <!-- 10:00 – selected slot on Tue 10, 10:00–11:00 -->
+          <tr class="hour-row">
+            <td><span class="time-label">10:00</span></td>
+            <td class="today-col"><div class="time-cell unavailable"></div></td>
+            <td><div class="time-cell selected-start"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td class="today-col"><div class="time-cell unavailable"></div></td>
+            <td><div class="time-cell selected-mid"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td class="today-col"><div class="time-cell unavailable"></div></td>
+            <td><div class="time-cell selected-mid"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td class="today-col"><div class="time-cell unavailable"></div></td>
+            <td><div class="time-cell selected-end"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+          </tr>
+          <!-- 11:00 -->
+          <tr class="hour-row">
+            <td><span class="time-label">11:00</span></td>
+            <td class="today-col"><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td class="today-col"><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td class="today-col"><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td class="today-col"><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+          </tr>
+          <!-- 12:00 -->
+          <tr class="hour-row">
+            <td><span class="time-label">12:00</span></td>
+            <td class="today-col"><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+            <td><div class="time-cell"></div></td>
+          </tr>
+          <tr><td></td><td class="today-col"><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td></tr>
+          <tr><td></td><td class="today-col"><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td></tr>
+          <tr><td></td><td class="today-col"><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td></tr>
+          <!-- 13:00 through 18:00 (abbreviated for mockup, same pattern) -->
+          <tr class="hour-row">
+            <td><span class="time-label">13:00</span></td>
+            <td class="today-col"><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td>
+          </tr>
+          <tr><td></td><td class="today-col"><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td></tr>
+          <tr><td></td><td class="today-col"><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td></tr>
+          <tr><td></td><td class="today-col"><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td></tr>
+          <tr class="hour-row">
+            <td><span class="time-label">14:00</span></td>
+            <td class="today-col"><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td>
+          </tr>
+          <tr><td></td><td class="today-col"><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td></tr>
+          <tr><td></td><td class="today-col"><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td></tr>
+          <tr><td></td><td class="today-col"><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td></tr>
+          <tr class="hour-row">
+            <td><span class="time-label">15:00</span></td>
+            <td class="today-col"><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td>
+          </tr>
+          <tr><td></td><td class="today-col"><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td></tr>
+          <tr><td></td><td class="today-col"><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td></tr>
+          <tr><td></td><td class="today-col"><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td></tr>
+          <tr class="hour-row">
+            <td><span class="time-label">16:00</span></td>
+            <td class="today-col"><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td>
+          </tr>
+          <tr><td></td><td class="today-col"><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td></tr>
+          <tr><td></td><td class="today-col"><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td></tr>
+          <tr><td></td><td class="today-col"><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td></tr>
+          <tr class="hour-row">
+            <td><span class="time-label">17:00</span></td>
+            <td class="today-col"><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td>
+          </tr>
+          <tr><td></td><td class="today-col"><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td></tr>
+          <tr><td></td><td class="today-col"><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td></tr>
+          <tr><td></td><td class="today-col"><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td></tr>
+          <tr class="hour-row">
+            <td><span class="time-label">18:00</span></td>
+            <td class="today-col"><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td>
+          </tr>
+          <tr><td></td><td class="today-col"><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td></tr>
+          <tr><td></td><td class="today-col"><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td></tr>
+          <tr><td></td><td class="today-col"><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td><td><div class="time-cell"></div></td></tr>
+          <tr class="hour-row">
+            <td><span class="time-label">19:00</span></td>
+            <td class="today-col"></td><td></td><td></td><td></td><td></td><td></td><td></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Selection summary -->
+      <div class="slot-summary">
+        <div>
+          <div class="slot-summary-text">Tuesday 10 November, 10:00 &ndash; 11:00</div>
+          <div class="slot-summary-detail">1 hour</div>
+        </div>
+        {{template "button" (dict "Type" "button" "Class" "btn-primary" "Text" "Confirm")}}
+      </div>
+    </main>
+  </div>
+</body>
+</html>

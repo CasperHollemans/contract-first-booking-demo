@@ -34,6 +34,18 @@ func main() {
 	})
 
 	// Mockup pages
+	mux.HandleFunc("GET /option-a", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "text/html; charset=utf-8")
+		if err := templates.ExecuteTemplate(w, "book-1-option-a.html", nil); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
+	})
+	mux.HandleFunc("GET /option-b", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "text/html; charset=utf-8")
+		if err := templates.ExecuteTemplate(w, "book-1-option-b.html", nil); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
+	})
 	mux.HandleFunc("GET /", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/html; charset=utf-8")
 		if err := templates.ExecuteTemplate(w, "book-1.html", nil); err != nil {
@@ -46,7 +58,8 @@ func main() {
 		addr = ":" + port
 	}
 	log.Printf("mockup server listening on %s", addr)
-	log.Printf("  component library: http://localhost%s/library", addr)
-	log.Printf("  book-1 mockup:     http://localhost%s/", addr)
+	log.Printf("  component library:       http://localhost%s/library", addr)
+	log.Printf("  option A (week grid):    http://localhost%s/option-a", addr)
+	log.Printf("  option B (two-step):     http://localhost%s/option-b", addr)
 	log.Fatal(http.ListenAndServe(addr, mux))
 }
