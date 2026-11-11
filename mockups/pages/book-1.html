@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Book a room - Mockup</title>
+  <link rel="stylesheet" href="/static/tokens.css">
+  <link rel="stylesheet" href="/static/components.css">
+</head>
+<body>
+  <div class="container">
+    <main class="card">
+      <h1 class="heading-1">Book a room</h1>
+      <form class="form">
+        <div class="form-row">
+          {{template "form-field" (dict "Label" "Date" "Type" "date" "Name" "date" "Value" "2026-11-20")}}
+          {{template "form-field" (dict "Label" "From" "Type" "time" "Name" "start" "Value" "10:00")}}
+          {{template "form-field" (dict "Label" "To" "Type" "time" "Name" "end" "Value" "11:00")}}
+        </div>
+        {{template "button" (dict "Type" "button" "Class" "btn-primary" "Text" "Check")}}
+      </form>
+
+      <!-- Example states -->
+      <div style="margin-top: var(--space-xl);">
+        <h2 style="font-size: var(--font-size-lg); margin-bottom: var(--space-md);">Example States</h2>
+
+        <div style="margin-bottom: var(--space-md);">
+          <strong>Valid slot:</strong>
+          {{template "result-message" (dict "Selectable" true)}}
+        </div>
+
+        <div>
+          <strong>Invalid slot:</strong>
+          {{template "result-message" (dict "Selectable" false)}}
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

@@ -3,11 +3,9 @@
 package controller
 
 import (
-	"embed"
 	"encoding/json"
 	"errors"
 	"html/template"
-	"io/fs"
 	"net/http"
 	"net/url"
 	"time"
@@ -16,14 +14,30 @@ import (
 	"github.com/casperhollemans/contract-first-booking-demo/internal/service"
 )
 
-var (
-	//go:embed templates/*.html
-	templateFiles embed.FS
-	//go:embed static
-	staticFiles embed.FS
+var templates *template.Template
 
-	templates = template.Must(template.ParseFS(templateFiles, "templates/*.html"))
-)
+func init() {
+	funcMap := template.FuncMap{
+		"dict": func(values ...interface{}) map[string]interface{} {
+			if len(values)%2 != 0 {
+				panic("dict requires an even number of arguments")
+			}
+			dict := make(map[string]interface{}, len(values)/2)
+			for i := 0; i < len(values); i += 2 {
+				key, ok := values[i].(string)
+				if !ok {
+					panic("dict keys must be strings")
+				}
+				dict[key] = values[i+1]
+			}
+			return dict
+		},
+	}
+
+	templates = template.New("").Funcs(funcMap)
+	templates = template.Must(templates.ParseGlob("web/templates/components/*.html"))
+	templates = template.Must(templates.ParseGlob("web/templates/pages/*.html"))
+}
 
 type SlotController struct {
 	slots *service.SlotService
@@ -39,14 +53,13 @@ func (c *SlotController) Register(mux *http.ServeMux) {
 
 	mux.HandleFunc("GET /{$}", c.page)
 	mux.HandleFunc("GET /ui/slots/check", c.checkFragment)
-	static, _ := fs.Sub(staticFiles, "static")
-	mux.Handle("GET /static/", http.StripPrefix("/static/", http.FileServerFS(static)))
+	mux.Handle("GET /static/", http.StripPrefix("/static/", http.FileServer(http.Dir("web/static"))))
 }
 
 // page: GET / → the slot form.
 func (c *SlotController) page(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	templates.ExecuteTemplate(w, "index.html", nil)
+	templates.ExecuteTemplate(w, "book-1", nil)
 }
 
 // checkFragment: GET /ui/slots/check (htmx) → the slot-result fragment.
@@ -57,7 +70,7 @@ func (c *SlotController) checkFragment(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	templates.ExecuteTemplate(w, "slot_result.html", struct{ Selectable bool }{c.slots.IsSelectable(slot)})
+	templates.ExecuteTemplate(w, "result-message", struct{ Selectable bool }{c.slots.IsSelectable(slot)})
 }
 
 // checkJSON: GET /slots/check?date=2026-12-09&start=10:00&end=11:00

@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Component Library</title>
+  <link rel="stylesheet" href="/static/tokens.css">
+  <link rel="stylesheet" href="/static/components.css">
+  <style>
+    .library-section {
+      margin-bottom: var(--space-xl);
+      padding-bottom: var(--space-xl);
+      border-bottom: var(--border-width) solid var(--color-border);
+    }
+    .library-section h2 {
+      font-size: var(--font-size-lg);
+      font-weight: 600;
+      margin-bottom: var(--space-md);
+    }
+    .library-example {
+      margin-bottom: var(--space-lg);
+    }
+    .library-example-title {
+      font-size: var(--font-size-sm);
+      font-weight: 500;
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-sm);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="heading-1">Component Library - Test Edit</h1>
+
+    <section class="library-section">
+      <h2>Buttons</h2>
+
+      <div class="library-example">
+        <div class="library-example-title">Primary button</div>
+        {{template "button" (dict "Type" "button" "Class" "btn-primary" "Text" "Primary Button")}}
+      </div>
+
+      <div class="library-example">
+        <div class="library-example-title">Disabled button</div>
+        <button type="button" class="btn btn-primary" disabled>Disabled Button</button>
+      </div>
+    </section>
+
+    <section class="library-section">
+      <h2>Form Fields</h2>
+
+      <div class="library-example">
+        <div class="library-example-title">Date input</div>
+        {{template "form-field" (dict "Label" "Date" "Type" "date" "Name" "date")}}
+      </div>
+
+      <div class="library-example">
+        <div class="library-example-title">Time input</div>
+        {{template "form-field" (dict "Label" "Time" "Type" "time" "Name" "time")}}
+      </div>
+
+      <div class="library-example">
+        <div class="library-example-title">Text input</div>
+        {{template "form-field" (dict "Label" "Text" "Type" "text" "Name" "text")}}
+      </div>
+    </section>
+
+    <section class="library-section">
+      <h2>Result Messages</h2>
+
+      <div class="library-example">
+        <div class="library-example-title">Success message</div>
+        {{template "result-message" (dict "Selectable" true)}}
+      </div>
+
+      <div class="library-example">
+        <div class="library-example-title">Error message</div>
+        {{template "result-message" (dict "Selectable" false)}}
+      </div>
+    </section>
+
+    <section class="library-section">
+      <h2>Layout</h2>
+
+      <div class="library-example">
+        <div class="library-example-title">Card</div>
+        <div class="card">
+          <h3 class="heading-1">Card heading</h3>
+          <p>This is a card component with some content inside.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

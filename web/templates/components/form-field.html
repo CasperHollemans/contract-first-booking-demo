@@ -1,0 +1,13 @@
+{{define "form-field"}}
+<div class="form-field">
+  <label>
+    {{.Label}}
+    <input
+      type="{{.Type}}"
+      name="{{.Name}}"
+      {{if .TestID}}data-testid="{{.TestID}}"{{end}}
+      {{if .Value}}value="{{.Value}}"{{end}}
+    >
+  </label>
+</div>
+{{end}}
